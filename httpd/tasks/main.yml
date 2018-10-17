@@ -1,0 +1,36 @@
+---
+# tasks file for httpd
+- name: creates hosts
+  lineinfile:
+    path: /etc/hosts
+    line: '127.0.0.1 website1.com  website2.com'
+    state: present
+- name: installing apache
+  package:
+    name: "{{ apache_pkg }}"
+    state: latest
+
+- name: Copy apache config 
+  template:
+    src: website.conf.j2
+    dest: /etc/httpd/conf.d/website.conf
+
+- name: create a directory for ansible
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: apache
+    group: apache
+  with_items:
+    - /var/www/html/website1
+    - /var/www/html/website2
+
+- lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: 'DirectoryIndex index.html'    
+    line: 'DirectoryIndex index.html index.php'
+
+- name: apache restarted
+  service:
+    name: httpd
+    state: restarted    

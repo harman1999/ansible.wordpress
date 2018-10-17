@@ -1,0 +1,24 @@
+---
+# tasks file for mysql
+- name: installing mysql
+  package:
+    name: "{{ pkg_mysql }}"
+    state: latest
+
+- name: creating database in mysql
+  mysql_db:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - "{{ database_1 }}"
+    - "{{ database_2 }}"
+      
+- name: creating users in mysql     
+  mysql_user:
+    name: "{{ item.0 }}"
+    password: "{{ item.1 }}"
+    priv: "{{ priv }}"
+    state: present 
+  with_items:  
+  - { 0: website1, 1: testone }
+  - { 0: website2, 1: testtwo }

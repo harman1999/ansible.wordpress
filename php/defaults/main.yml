@@ -1,0 +1,3 @@
+---
+# defaults file for php
+pkg_php: php, php-mysqlnd

@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+     DocumentRoot {{ doc_root1 }}
+     ServerName {{ server1 }}
+     ServerAlias {{ server1 }}
+     ErrorLog {{ error_1 }}
+     CustomLog {{ custom_1 }}          {{ comb_1 }}
+</VirtualHost>
+<VirtualHost *:80>
+     DocumentRoot {{ doc_root2 }}
+     ServerName {{ server2 }}
+     ServerAlias {{ server2 }}
+     ErrorLog {{ error_2 }}
+     CustomLog {{ custom_2 }}          {{ comb_2 }}
+</VirtualHost>
