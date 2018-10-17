@@ -3,7 +3,7 @@
 - name: creates hosts
   lineinfile:
     path: /etc/hosts
-    line: '127.0.0.1 website1.com  website2.com'
+    line: "{{ creates_hosts }}"
     state: present
 - name: installing apache
   package:
@@ -13,7 +13,7 @@
 - name: Copy apache config 
   template:
     src: website.conf.j2
-    dest: /etc/httpd/conf.d/website.conf
+    dest: "{{ j2_dest }}"
 
 - name: create a directory for ansible
   file:
@@ -22,15 +22,15 @@
     owner: apache
     group: apache
   with_items:
-    - /var/www/html/website1
-    - /var/www/html/website2
+    - "{{ create_dir1 }}"
+    - "{{ create_dir2 }}"
 
 - lineinfile:
     path: /etc/httpd/conf/httpd.conf
-    regexp: 'DirectoryIndex index.html'    
-    line: 'DirectoryIndex index.html index.php'
+    regexp: "{{ apache_dir_index }}"    
+    line: "{{ apache_dir_index }} index.php"
 
 - name: apache restarted
   service:
     name: httpd
-    state: restarted    
+    state: "{{ apache_restarted }}"   

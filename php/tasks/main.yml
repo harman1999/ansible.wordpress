@@ -7,18 +7,18 @@
    
 - name: domwload wp-cli    
   get_url:
-    url: https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-    dest: /bin/wp
+    url: "{{ domwload_wp_cli }}"
+    dest: "{{ dest_wp_cli }}"
     mode: 0777
 
 - name: wp domwloads 
-  shell: wp core download
+  shell: "{{ domwload_wp }}"
   args:
-    chdir: "{{ item.0 }}"
-    creates: "{{ item.1 }}/index.php"
+    chdir: "{{ item }}"
+    creates: "{{ item }}/index.php"
   with_items:
-    - { 0: '/var/www/html/website1', 1: '/var/www/html/website1' }
-    - { 0: '/var/www/html/website2', 1: '/var/www/html/website2' }
+    - "{{ doc_root1 }}"
+    - "{{ doc_root2 }}"
 
 - name: Create a wp-config.php file
   shell:  "wp core config --dbname={{ item.0 }} --dbuser={{ item.1 }} --dbpass={{ item.2 }} --dbhost=localhost --dbprefix=wp_"
@@ -26,12 +26,12 @@
     chdir: "{{ item.3 }}"
     creates: "{{ item.3 }}/wp-config.php"
   with_items:
-    - { 0: 'web1', 1: 'website1', 2: 'testone', 3: '/var/www/html/website1' }
-    - { 0: 'web2', 1: 'website2', 2: 'testtwo', 3: '/var/www/html/website2' } 
+    - { 0: "{{ db_name1 }}", 1: "{{ db_user1 }}", 2: "{{ db_pass1 }}", 3: "{{ doc_root1 }}" }
+    - { 0: "{{ db_name2 }}", 1: "{{ db_user2 }}", 2: "{{ db_pass2 }}", 3: "{{ doc_root2 }}" } 
 - name: Run the installation           
   shell: 'wp core install --url="http://{{ item.0 }}.com" --title="{{ item.1 }}" --admin_user="{{ item.2 }}" --admin_password="{{ item.3 }}" --admin_email="{{ item.4 }}.com"'
   args:
     chdir: "{{ item.5 }}"
   with_items: 
-    - { 0: 'website1', 1: 'testsite1', 2: 'web1', 3: 'qwertypad', 4: 'test1@test.com', 5: '/var/www/html/website1' }
-    - { 0: 'website2', 1: 'testsite2', 2: 'web2', 3: 'qwertypad1999', 4: 'test2@test.com', 5: '/var/www/html/website2' }
+    - { 0: "{{ web_url1 }}", 1: "{{ title_1 }}", 2: "{{ admin_user1 }}", 3: "{{ admin_password1 }}", 4: "{{ admin_email1 }}", 5: "{{ doc_root1 }}" }
+    - { 0: "{{ web_url2 }}", 1: "{{ title_2 }}", 2: "{{ admin_user2 }}", 3: "{{ admin_password2 }}", 4: "{{ admin_email2 }}", 5: "{{ doc_root2 }}" }

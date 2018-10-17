@@ -13,3 +13,9 @@ custom_1: "{{ error_custom }}/website1com_access.log"
 custom_2: "{{ error_custom }}/website2com_access.log"
 comb_1: combined
 comb_2: combined
+creates_hosts: '127.0.0.1 website1.com  website2.com'
+j2_dest: /etc/httpd/conf.d/website.conf
+create_dir1: /var/www/html/website1
+create_dir2: /var/www/html/website2
+apache_dir_index: 'DirectoryIndex index.html'
+apache_restarted: restarted

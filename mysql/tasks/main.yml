@@ -20,5 +20,5 @@
     priv: "{{ priv }}"
     state: present 
   with_items:  
-  - { 0: website1, 1: testone }
-  - { 0: website2, 1: testtwo }
+  - { 0: "{{ db_user1 }}", 1: "{{ db_password1 }}" }
+  - { 0: "{{ db_user2 }}", 1: "{{ db_password2 }}" }
