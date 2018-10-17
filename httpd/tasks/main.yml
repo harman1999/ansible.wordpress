@@ -5,6 +5,7 @@
     path: /etc/hosts
     line: "{{ creates_hosts }}"
     state: present
+
 - name: installing apache
   package:
     name: "{{ apache_pkg }}"
