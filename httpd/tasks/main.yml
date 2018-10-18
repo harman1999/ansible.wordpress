@@ -12,12 +12,16 @@
     name: "{{ apache_pkg }}"
     state: latest
   tags: [ install_apache ]
+  notify:
+    - Restart apache
 
 - name: Copy apache config 
   template:
     src: website.conf.j2
     dest: "{{ j2_dest }}"
   tags: [ apache_config ]
+  notify:
+    - Restart apache
 
 - name: create document roots
   file:
@@ -34,10 +38,7 @@
     path: /etc/httpd/conf/httpd.conf
     regexp: "{{ apache_dir_index }}"    
     line: "{{ apache_dir_index }} index.php"
-  tags: [ dir_index ] 
+  tags: [ dir_index ]
+  notify:
+    - Restart apache
 
-- name: Restart apache
-  service:
-    name: httpd
-    state: "{{ apache_restarted }}"
-  tags: [ apache_restart ]

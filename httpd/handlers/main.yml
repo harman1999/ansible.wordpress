@@ -1,2 +1,6 @@
 ---
 # handlers file for httpd
+- name: Restart apache
+  service:
+    name: httpd
+    state: "{{ apache_restarted }}"

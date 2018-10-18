@@ -5,6 +5,8 @@
     name: "{{ pkg_php }}"
     state: latest
   tags: [ php ]
+  notify:
+    - apache restart        
    
 - name: download wp-cli    
   get_url:
@@ -32,6 +34,8 @@
     - { 0: "{{ db_name1 }}", 1: "{{ db_user1 }}", 2: "{{ db_pass1 }}", 3: "{{ doc_root1 }}" }
     - { 0: "{{ db_name2 }}", 1: "{{ db_user2 }}", 2: "{{ db_pass2 }}", 3: "{{ doc_root2 }}" } 
   tags: [ wp_config ]
+  notify:
+    - apache restart
 
 - name: Run the installation           
   shell: 'wp core install --url="http://{{ item.0 }}.com" --title="{{ item.1 }}" --admin_user="{{ item.2 }}" --admin_password="{{ item.3 }}" --admin_email="{{ item.4 }}.com"'
@@ -41,9 +45,5 @@
     - { 0: "{{ web_url1 }}", 1: "{{ title_1 }}", 2: "{{ admin_user1 }}", 3: "{{ admin_password1 }}", 4: "{{ admin_email1 }}", 5: "{{ doc_root1 }}" }
     - { 0: "{{ web_url2 }}", 1: "{{ title_2 }}", 2: "{{ admin_user2 }}", 3: "{{ admin_password2 }}", 4: "{{ admin_email2 }}", 5: "{{ doc_root2 }}" }
   tags: [ wp_install ]
-
-- name: apache restarted
-  service:
-    name: httpd
-    state: "{{ apache_restarted }}"
-  tags: [ apache_restart ]   
+  notify:
+    - apache restart
