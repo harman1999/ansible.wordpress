@@ -1,14 +1,16 @@
 ---
 # tasks file for mysql
-- name: installing mysql
+- name: install mysql
   package:
     name: "{{ pkg_mysql }}"
     state: latest
+  tags: [ mysql_install ]
 
-- name: restarted mysql
+- name: restart mysqld
   service:
     name: "{{ restarted_mysql }}"        
     state: restarted
+  tags: [ restart_mysqld ]
 
 - name: creating database in mysql
   mysql_db:
@@ -17,7 +19,8 @@
   with_items:
     - "{{ database_1 }}"
     - "{{ database_2 }}"
-      
+  tags: [ mysql_db ]
+
 - name: creating users in mysql     
   mysql_user:
     name: "{{ item.0 }}"
@@ -27,3 +30,4 @@
   with_items:  
   - { 0: "{{ db_user1 }}", 1: "{{ db_password1 }}" }
   - { 0: "{{ db_user2 }}", 1: "{{ db_password2 }}" }
+    tags: [ mysql_user ]  

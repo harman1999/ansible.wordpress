@@ -4,12 +4,14 @@
   package:
     name: "{{ pkg_php }}"
     state: latest
+  tags: [ php ]
    
-- name: domwload wp-cli    
+- name: download wp-cli    
   get_url:
     url: "{{ domwload_wp_cli }}"
     dest: "{{ dest_wp_cli }}"
     mode: 0777
+  tags: [ wp_cli ]
 
 - name: wp domwloads 
   shell: "{{ domwload_wp }}"
@@ -19,6 +21,7 @@
   with_items:
     - "{{ doc_root1 }}"
     - "{{ doc_root2 }}"
+  tags: [ wp_download ]
 
 - name: Create a wp-config.php file
   shell:  "wp core config --dbname={{ item.0 }} --dbuser={{ item.1 }} --dbpass={{ item.2 }} --dbhost=localhost --dbprefix=wp_"
@@ -28,6 +31,8 @@
   with_items:
     - { 0: "{{ db_name1 }}", 1: "{{ db_user1 }}", 2: "{{ db_pass1 }}", 3: "{{ doc_root1 }}" }
     - { 0: "{{ db_name2 }}", 1: "{{ db_user2 }}", 2: "{{ db_pass2 }}", 3: "{{ doc_root2 }}" } 
+  tags: [ wp_config ]
+
 - name: Run the installation           
   shell: 'wp core install --url="http://{{ item.0 }}.com" --title="{{ item.1 }}" --admin_user="{{ item.2 }}" --admin_password="{{ item.3 }}" --admin_email="{{ item.4 }}.com"'
   args:
@@ -35,8 +40,10 @@
   with_items: 
     - { 0: "{{ web_url1 }}", 1: "{{ title_1 }}", 2: "{{ admin_user1 }}", 3: "{{ admin_password1 }}", 4: "{{ admin_email1 }}", 5: "{{ doc_root1 }}" }
     - { 0: "{{ web_url2 }}", 1: "{{ title_2 }}", 2: "{{ admin_user2 }}", 3: "{{ admin_password2 }}", 4: "{{ admin_email2 }}", 5: "{{ doc_root2 }}" }
+  tags: [ wp_install ]
 
 - name: apache restarted
   service:
     name: httpd
-    state: "{{ apache_restarted }}"      
+    state: "{{ apache_restarted }}"
+  tags: [ apache_restart ]   

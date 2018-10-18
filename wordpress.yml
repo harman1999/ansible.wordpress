@@ -3,6 +3,6 @@
   gather_facts: no
   remote_user: root
   roles:
-    - httpd
-    - mysql
-    - php 
+    - { role: httpd, tags: httpd }
+    - { role: mysql, tags: mysql }
+    - { role: php, tags: php } 
