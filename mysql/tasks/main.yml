@@ -28,6 +28,6 @@
     priv: "{{ priv }}"
     state: present 
   with_items:  
-    - { 0: "{{ db_user1 }}", 1: "{{ db_password1 }}" }
-    - { 0: "{{ db_user2 }}", 1: "{{ db_password2 }}" }
+    - { 0: "{{ db_user1 }}", 1: "{{ db_pass1 }}" }
+    - { 0: "{{ db_user2 }}", 1: "{{ db_pass2 }}" }
   tags: [ mysql_user ]  
