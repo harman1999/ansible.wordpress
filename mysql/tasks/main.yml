@@ -5,6 +5,11 @@
     name: "{{ pkg_mysql }}"
     state: latest
 
+- name: restarted mysql
+  service:
+    name: "{{ restarted_mysql }}"        
+    state: restarted
+
 - name: creating database in mysql
   mysql_db:
     name: '{{ item }}'

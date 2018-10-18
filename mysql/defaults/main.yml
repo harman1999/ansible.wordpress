@@ -8,3 +8,4 @@ db_user1: website1
 db_user2: website2
 db_password1: testone
 db_password2: testtwo
+restarted_mysql: mysqld

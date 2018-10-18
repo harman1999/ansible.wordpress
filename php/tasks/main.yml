@@ -35,3 +35,8 @@
   with_items: 
     - { 0: "{{ web_url1 }}", 1: "{{ title_1 }}", 2: "{{ admin_user1 }}", 3: "{{ admin_password1 }}", 4: "{{ admin_email1 }}", 5: "{{ doc_root1 }}" }
     - { 0: "{{ web_url2 }}", 1: "{{ title_2 }}", 2: "{{ admin_user2 }}", 3: "{{ admin_password2 }}", 4: "{{ admin_email2 }}", 5: "{{ doc_root2 }}" }
+
+- name: apache restarted
+  service:
+    name: httpd
+    state: "{{ apache_restarted }}"      

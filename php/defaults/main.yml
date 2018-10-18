@@ -22,3 +22,4 @@ admin_password1: 'qwertypad'
 admin_password2: 'qwertypad1999'
 admin_email1: 'test1@test.com'
 admin_email2: 'test2@test.com'
+apache_restarted: restarted
