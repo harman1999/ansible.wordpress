@@ -4,7 +4,7 @@
   package:
     name: "{{ pkg_php }}"
     state: latest
-  tags: [ php ]
+  tags: [ php_install ]
   notify:
     - apache restart        
    
