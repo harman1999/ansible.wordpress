@@ -8,7 +8,7 @@
 
 - name: restart mysqld
   service:
-    name: "{{ restarted_mysql }}"        
+    name: mysqld
     state: restarted
   tags: [ restart_mysqld ]
 

@@ -1,6 +1,6 @@
 ---
 # defaults file for mysql
-pkg_mysql: mysql-server
+pkg_mysql: mysql-server, python-mysql
 database_1: web1
 database_2: web2
 priv: "*.*:ALL"
@@ -20,4 +20,3 @@ db_pass2: !vault |
   61666166643365613038366464396562653039326337326263616661303238373633373132376134
   6236363138626638660a356232613433376533663936346461386131636362303066363663666662
   3834
-restarted_mysql: mysqld
