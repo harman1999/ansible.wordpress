@@ -1,0 +1,6 @@
+---
+# defaults file for mysql
+pkg_mysql: mysql-server, python-mysql
+database_1: web1
+database_2: web2
+priv: "*.*:ALL"
