@@ -1,18 +1,6 @@
 ---
 # defaults file for httpd
-apache_pkg: httpd
 main_root: /var/www/html
-server1: website1.com
-server2: website2.com
-error_custom: /var/log/httpd
-error_1: "{{ error_custom }}/website1.com_error.logs"
-error_2: "{{ error_custom }}/website2.com_error.logs"
-custom_1: "{{ error_custom }}/website1com_access.log"
-custom_2: "{{ error_custom }}/website2com_access.log"
 comb_1: combined
 comb_2: combined
-creates_hosts: '127.0.0.1 website1.com  website2.com'
-j2_dest: /etc/httpd/conf.d/website.conf
-create_dir1: /var/www/html/website1
-create_dir2: /var/www/html/website2
 apache_dir_index: 'DirectoryIndex index.html'

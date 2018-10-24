@@ -1,4 +1,3 @@
----
 # tasks file for php
 - name: installing php
   package:
@@ -26,7 +25,7 @@
   tags: [ wp_download ]
 
 - name: Create a wp-config.php file
-  shell:  "wp core config --dbname={{ item.0 }} --dbuser={{ item.1 }} --dbpass={{ item.2 }} --dbhost=localhost --dbprefix=wp_"
+  shell:  "wp core config --dbname={{ item.0 }} --dbuser={{ item.1 }} --dbpass={{ item.2 }} --dbhost=localhost --dbprefix=wp_ --allow-root"
   args:
     chdir: "{{ item.3 }}"
     creates: "{{ item.3 }}/wp-config.php"
@@ -38,7 +37,7 @@
     - apache restart
 
 - name: Run the installation           
-  shell: 'wp core install --url="http://{{ item.0 }}.com" --title="{{ item.1 }}" --admin_user="{{ item.2 }}" --admin_password="{{ item.3 }}" --admin_email="{{ item.4 }}.com"'
+  shell: 'wp core install --url="http://{{ item.0 }}.com" --title="{{ item.1 }}" --admin_user="{{ item.2 }}" --admin_password="{{ item.3 }}" --admin_email="{{ item.4 }}".com --allow-root'
   args:
     chdir: "{{ item.5 }}"
   with_items: 

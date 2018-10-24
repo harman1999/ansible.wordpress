@@ -1,5 +1,10 @@
 ---
 # tasks file for mysql
+
+- name: Update apt mysql-server,python-mysqld
+  shell: apt-get update
+  when: ansible_distribution == "Ubuntu"
+
 - name: install mysql
   package:
     name: "{{ pkg_mysql }}"
@@ -8,7 +13,7 @@
 
 - name: restart mysqld
   service:
-    name: mysqld
+    name: "{{ db_service }}"
     state: restarted
   tags: [ restart_mysqld ]
 

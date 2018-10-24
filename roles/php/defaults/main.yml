@@ -1,9 +1,8 @@
 ---
 # defaults file for php
-pkg_php: php, php-mysqlnd
 domwload_wp_cli: "https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 dest_wp_cli: /bin/wp
-domwload_wp: 'wp core download'
+domwload_wp: 'wp core download --allow-root'
 admin_password1: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   35646534666133613938663535666665383362646234626361383236316335383836633266313137
@@ -18,8 +17,6 @@ admin_password2: !vault |
   65663930346238646462396662343265343038346132646635366532356561636332383762643033
   3965396561616132630a333963366166303538363265633331643738306361373466383338353730
   3561
-web_url1: 'website1'
-web_url2: 'website2'
 title_1: 'testsite1'
 title_2: 'testsite2'
 admin_user1: 'web1'

@@ -1,11 +1,9 @@
 ---
 # tasks file for httpd
-- name: Add domains in hosts
-  lineinfile:
-    path: /etc/hosts
-    line: "{{ creates_hosts }}"
-    state: present
-  tags: [ add_domains ]
+
+- name: Update apt
+  shell: apt-get update
+  when: ansible_distribution == "Ubuntu"
 
 - name: Installing apache
   package:
@@ -18,7 +16,7 @@
 - name: Copy apache config 
   template:
     src: website.conf.j2
-    dest: "{{ j2_dest }}"
+    dest: "{{ apache_conf_dest }}"
   tags: [ apache_config ]
   notify:
     - Restart apache
@@ -27,15 +25,15 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: apache
-    group: apache
+    owner: "{{ apache_owner }}"
+    group: "{{ apache_group }}"
   with_items:
-    - "{{ create_dir1 }}"
-    - "{{ create_dir2 }}"
+    - "{{ doc_root1 }}"
+    - "{{ doc_root2 }}"
   tags: [ doc_roots ]
 
 - lineinfile:
-    path: /etc/httpd/conf/httpd.conf
+    path: "{{ conf_file }}"
     regexp: "{{ apache_dir_index }}"    
     line: "{{ apache_dir_index }} index.php"
   tags: [ dir_index ]
