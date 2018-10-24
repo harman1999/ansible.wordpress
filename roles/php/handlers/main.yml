@@ -1,0 +1,6 @@
+---
+# handlers file for php
+- name: apache restart
+  service:
+    name: "{{ apache_restart }}"
+    state: restarted

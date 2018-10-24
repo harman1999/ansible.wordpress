@@ -1,0 +1,6 @@
+---
+# defaults file for httpd
+main_root: /var/www/html
+comb_1: combined
+comb_2: combined
+apache_dir_index: 'DirectoryIndex index.html'

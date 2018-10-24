@@ -1,7 +1,9 @@
 ---
-- hosts: all
-  gather_facts: no
-  remote_user: root
+- hosts: servers
+  gather_facts: yes
+  remote_user: "{{ remote_user }}"
+  become: true
+  become_user: root
   roles:
     - { role: httpd, tags: httpd }
     - { role: mysql, tags: mysql }
