@@ -1,0 +1,9 @@
+---
+# tasks file for aws_security
+- name: create security group 
+  ec2_group:
+    name: "{{ group }}"
+    description: sg for wordpress hosts
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ region }}"
+    rules: "{{ ec2_rules }}"

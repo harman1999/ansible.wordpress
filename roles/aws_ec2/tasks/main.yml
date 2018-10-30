@@ -1,0 +1,62 @@
+---
+# tasks file for aws_ec2
+- name: Launching a centos EC2 Instance
+  ec2:
+    instance_type: "{{ instance_type }}"
+    image:  "{{ image1 }}"
+    region: "{{ region }}"
+    keypair: "{{ keypair }}"
+    count: "{{ count }}"
+    group: "{{ group }}"
+    wait: "{{ wait }}"
+    volumes:
+      - device_name: "{{ device_name }}"
+        volume_size: "{{ volume_size }}"
+        delete_on_termination: true
+    user_data: "{{ lookup('file', 'userdata_centos.sh') }}"
+  register: ec2
+
+- set_fact:
+    instance_ip1: "{{ item.public_ip }}"
+  with_items: "{{ ec2.instances }}"
+
+- name: Launching a ubuntu EC2 Instance
+  ec2:
+    instance_type: "{{ instance_type }}"
+    image:  "{{ image2 }}"
+    region: "{{ region }}"
+    keypair: "{{ keypair }}"
+    count: "{{ count }}"
+    group: "{{ group }}"
+    wait: "{{ wait }}"
+    volumes:
+      - device_name: "{{ device_name }}"
+        volume_size: "{{ volume_size }}"
+        delete_on_termination: true
+    user_data: "{{ lookup('file', 'userdata_ubuntu.sh') }}"
+  register: ec2
+
+ 
+- set_fact:
+    instance_ip2: "{{ item.public_ip }}"
+  with_items: "{{ ec2.instances }}"
+
+- lineinfile:
+    path: /etc/hosts
+    line: "{{ item }}"
+  with_items:  
+     - "{{ instance_ip1 }} centos.host"
+     - "{{ instance_ip2 }} ubuntu.host"
+  delegate_to: 127.0.0.1
+  become: yes
+  become_user: root
+
+- name: Wait for hosts
+  wait_for:
+    host: "{{ item }}"
+    port: 22
+    delay: 20
+    state: started
+  with_items:
+    - centos.host
+    - ubuntu.host
