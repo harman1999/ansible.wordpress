@@ -1,0 +1,26 @@
+---
+aws_instances:
+  hosts: aws-instances
+  vars:
+    instance_type: t2.micro
+    image1: ami-1780a878
+    image2: ami-0d773a3b7bb2bb1c1
+    region: ap-south-1
+    keypair: test
+    count: 1
+    group: security_ec2
+    wait: true
+    volume_size: 10
+    device_name: /dev/sda1     
+    vpc_id: vpc-d642b3bf 
+    ec2_rules:
+      - proto: tcp
+        ports: 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        ports: 22
+        cidr_ip: 0.0.0.0/0
+    server1: website1.com
+    server2: website2.com
+    server3: website3.com 
+    server4: website4.com

@@ -1,0 +1,29 @@
+---
+- hosts: aws_instances
+  gather_facts: no
+  connection: local
+  roles:
+    - aws_security
+    - aws_ec2
+  tasks:
+    - lineinfile:
+        path: /etc/hosts
+        line: "{{ item }}"
+        state: present
+      become: true
+      become_user: root
+      delegate_to: 127.0.0.1
+      with_items:
+        - "{{ instance_ip1 }} centos.host"
+        - "{{ instance_ip1 }} {{ server1 }} {{ server2 }}"
+        - "{{ instance_ip2 }} ubuntu.host"
+        - "{{ instance_ip2 }} {{ server3 }} {{ server4 }}"
+- hosts: servers
+  gather_facts: yes
+  remote_user: "{{ remote_user }}"
+  become: true
+  become_user: root
+  roles:
+    - { role: httpd, tags: httpd }
+    - { role: mysql, tags: mysql }
+    - { role: php, tags: php }
